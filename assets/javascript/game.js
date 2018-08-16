@@ -61,26 +61,37 @@ window.onload = function () {
         document.onkeyup = function(event) {
             //get the usersGuess
             var userGuess = event.key;
-            var tempArray = [];
+            var tempCount = 0;
 
             for(var i = 0; i < wordArray.length; i++)
             {
                 if(wordArray[i] === userGuess){
-                   // userGuessedVisisbleWord.push(userGuess);
-                    tempArray.push(userGuess);
+                   userGuessedVisisbleWord[i] = (userGuess);
+                    //tempArray.push(userGuess);
+                    tempCount++;
 
                 
                 }
                 else{
                     //userGuessedVisisbleWord.push(wordArray[i]);
-                    tempArray.push(userGuessedVisisbleWord[i]);          
+                    //tempArray.push(userGuessedVisisbleWord[i]);          
                    
                 }
 
             }
-            console.log(tempArray);
 
-            displayedWord = tempArray.toString().replace(/,/g," " );
+                if(tempCount === 0){
+
+                    guessedLetters.push(userGuess);
+                    guessesLeft --;
+                
+                }
+                else{
+                    //do nothing because they guessed a letter correctly
+                }
+           // console.log(tempArray);
+
+            displayedWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
 
             document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
             document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
