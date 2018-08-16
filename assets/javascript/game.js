@@ -11,6 +11,7 @@ window.onload = function () {
         var userGuessedVisisbleWord = [];
         var initialScreen;
         var selectedWord;
+        var displayedWord;
        
         resetToBeginning();
 
@@ -27,7 +28,7 @@ window.onload = function () {
             selectedWord = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
             //turn word into array
-            wordArray = selectedWord.split();
+            wordArray = selectedWord.split("");
 
         
             //make word to be displayed
@@ -45,11 +46,11 @@ window.onload = function () {
             }
 
             //remove commas
-            userGuessedVisisbleWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
+           displayedWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
 
-            console.log("Selected word array " + wordArray + " array for user " + userGuessedVisisbleWord);
+            console.log("Selected word array " + selectedWord + " array for user " + userGuessedVisisbleWord);
 
-            document.querySelector("#currentWord").innerHTML = "<h5>" + userGuessedVisisbleWord + "</h5>";
+            document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
             document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
             document.querySelector("#remainingGuesses").innerHTML = "<h5>" + guessesLeft + "</h5>";
 
@@ -60,22 +61,31 @@ window.onload = function () {
         document.onkeyup = function(event) {
             //get the usersGuess
             var userGuess = event.key;
-
+            var tempArray = [];
 
             for(var i = 0; i < wordArray.length; i++)
             {
                 if(wordArray[i] === userGuess){
-                    alert("You got a letter");
+                   // userGuessedVisisbleWord.push(userGuess);
+                    tempArray.push(userGuess);
 
                 
                 }
                 else{
-                    guessesLeft --;
-                    guessedLetters.push(userGuess);
+                    //userGuessedVisisbleWord.push(wordArray[i]);
+                    tempArray.push(userGuessedVisisbleWord[i]);          
+                   
                 }
 
-
             }
+            console.log(tempArray);
+
+            displayedWord = tempArray.toString().replace(/,/g," " );
+
+            document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
+            document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
+            document.querySelector("#remainingGuesses").innerHTML = "<h5>" + guessesLeft + "</h5>";
+            document.querySelector("#guessedLetters").innerHTML = "<h5>" + guessedLetters + "</h5>";
 
 
 
