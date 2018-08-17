@@ -45,14 +45,7 @@ window.onload = function () {
 
             }
 
-            //remove commas
-           displayedWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
-
-            console.log("Selected word array " + selectedWord + " array for user " + userGuessedVisisbleWord);
-
-            document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
-            document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
-            document.querySelector("#remainingGuesses").innerHTML = "<h5>" + guessesLeft + "</h5>";
+        displayValues();
 
 
         }
@@ -82,16 +75,44 @@ window.onload = function () {
 
                 if(tempCount === 0){
 
+                    if(guessedLetters.includes(userGuess)){
+
+                        //do nothing
+                    }
+                    else {
+
                     guessedLetters.push(userGuess);
                     guessesLeft --;
+
+                    }
+
+                    if(guessesLeft == 0)
+                    {
+                        alert("Sorry looks like you lost this one");
+                        resetToBeginning();
+
+                    }
+                    else{
+                        //do nothing they still get to keep guessing
+                    }
                 
                 }
                 else{
-                    //do nothing because they guessed a letter correctly
+                   //do nothing they guessed right
                 }
-           // console.log(tempArray);
+
+            displayValues();
+
+
+
+        };
+
+        function displayValues(){
 
             displayedWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
+
+            console.log("Selected word array " + selectedWord + " array for user " + userGuessedVisisbleWord);
+
 
             document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
             document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
@@ -99,8 +120,7 @@ window.onload = function () {
             document.querySelector("#guessedLetters").innerHTML = "<h5>" + guessedLetters + "</h5>";
 
 
-
-        };
+        }
     }
         
     
