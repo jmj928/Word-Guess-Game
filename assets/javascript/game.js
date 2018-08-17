@@ -5,7 +5,7 @@ window.onload = function () {
         var losses = 0;
         var guessesLeft = 10;
         var guessedLetters = [];
-        var computerChoices = ["carrie", "jaws", "insidious","the shining"];
+        var computerChoices = ["carrie", "jaws", "insidious","the shining","nightmare on elm street","chucky"];
         var gameStarted = false;
         var wordArray =[];
         var userGuessedVisisbleWord = [];
@@ -15,6 +15,7 @@ window.onload = function () {
        
         resetToBeginning();
 
+        
         function resetToBeginning(){
             guessesLeft = 10;
             gameStarted = false;
@@ -94,14 +95,26 @@ window.onload = function () {
                     }
                     else{
                         //do nothing they still get to keep guessing
+                        
                     }
                 
                 }
                 else{
                    //do nothing they guessed right
+                   
                 }
+                displayValues();
 
-            displayValues();
+           
+            
+            if(userGuessedVisisbleWord.includes("_")){
+                //keep guessing
+
+            }
+            else{
+                displayValues();
+                youWon();
+            }
 
 
 
@@ -118,6 +131,16 @@ window.onload = function () {
             document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
             document.querySelector("#remainingGuesses").innerHTML = "<h5>" + guessesLeft + "</h5>";
             document.querySelector("#guessedLetters").innerHTML = "<h5>" + guessedLetters + "</h5>";
+
+
+        }
+
+        function youWon(){
+            wins++;
+            displayValues();
+            //alert("You won");
+            resetToBeginning();
+
 
 
         }
