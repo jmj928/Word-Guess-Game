@@ -11,10 +11,13 @@ window.onload = function () {
         var initialScreen;
         var selectedWord;
         var displayedWord;
+        var displayedImage;
+        var pictureDisplay = document.querySelector("#pictureDisplay");
+        var pictureDisplay2 = document.querySelector("#pictureDisplay2");
 
         var computerChoices = {
             films:  ["carrie", "jaws", "insidious","the shining","nightmare on elm street","chucky"],
-          //pictures: ["assets/"]
+            
 
             displayValues: function() {
 
@@ -33,6 +36,8 @@ window.onload = function () {
             resetToBeginning: function() {
                 guessesLeft = 10;
                 gameStarted = false;
+
+
 
                 //clear arrays
                 guessedLetters =[];
@@ -58,21 +63,42 @@ window.onload = function () {
 
                     }
 
+               
+
                 this.displayValues();
+               // this.wait(3000);
+
+
+
+              
             },
 
             youWon: function() {
                 wins++;
                 this.displayValues();
                 //alert("You won");
-                this.resetToBeginning();
+                var audio = new Audio('./assets/images/Blop.mp3');
+                audio.play();
+                pictureDisplay.src = 'assets/images/redballoon.png';
+                pictureDisplay2.src = 'assets/images/redballoon.png'; 
+                //setTimeout(computerChoices.wait,3000);
+                this.resetToBeginning(); 
+                
+            },
+
+            wait: function(){
+            //
+                
             }
+
         };
        
         computerChoices.resetToBeginning();
 
         document.onkeyup = function(event) {
             //get the usersGuess
+            pictureDisplay.src = '';
+            pictureDisplay2.src = '';
             var userGuess = event.key;
             var tempCount = 0;
 
@@ -124,10 +150,13 @@ window.onload = function () {
             }
             else{
                 computerChoices.displayValues();
+                //computerChoices.wait(3000);
                 computerChoices.youWon();
             }
 
         };
+
+        //window.setTimeout(computerChoices.resetToBeginning, 3000);
 
 }
         
