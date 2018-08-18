@@ -4,53 +4,72 @@ window.onload = function () {
         var wins = 0;
         var losses = 0;
         var guessesLeft = 10;
-        var guessedLetters = [];
-        var computerChoices = ["carrie", "jaws", "insidious","the shining","nightmare on elm street","chucky"];
+        var guessedLetters = [];       
         var gameStarted = false;
         var wordArray =[];
         var userGuessedVisisbleWord = [];
         var initialScreen;
         var selectedWord;
         var displayedWord;
-       
-        resetToBeginning();
 
-        
-        function resetToBeginning(){
-            guessesLeft = 10;
-            gameStarted = false;
+        var computerChoices = {
+            films:  ["carrie", "jaws", "insidious","the shining","nightmare on elm street","chucky"],
+          //pictures: ["assets/"]
 
-            //clear arrays
-            guessedLetters =[];
-            wordArray =[];
-            userGuessedVisisbleWord = [];
+            displayValues: function() {
 
-            //get random word
-            selectedWord = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+                displayedWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
 
-            //turn word into array
-            wordArray = selectedWord.split("");
+                console.log("Selected word array " + selectedWord + " array for user " + userGuessedVisisbleWord);
 
-        
-            //make word to be displayed
-            for (var i = 0; i < selectedWord.length; i++)
-            {
-                if(selectedWord[i] === " ")
-                {
-                    userGuessedVisisbleWord.push(" &nbsp; ");
+                document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
+                document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
+                document.querySelector("#remainingGuesses").innerHTML = "<h5>" + guessesLeft + "</h5>";
+                document.querySelector("#guessedLetters").innerHTML = "<h5>" + guessedLetters + "</h5>";
 
-                }
-                else {
-                userGuessedVisisbleWord.push("_");
-                }
 
+            },
+
+            resetToBeginning: function() {
+                guessesLeft = 10;
+                gameStarted = false;
+
+                //clear arrays
+                guessedLetters =[];
+                wordArray =[];
+                userGuessedVisisbleWord = [];
+
+                //get random word
+                selectedWord = computerChoices.films[Math.floor(Math.random() * computerChoices.films.length)];
+
+                //turn word into array
+                wordArray = selectedWord.split("");
+
+                //make word to be displayed
+                for (var i = 0; i < selectedWord.length; i++)
+                    {
+                        if(selectedWord[i] === " ")
+                        {
+                            userGuessedVisisbleWord.push(" &nbsp; ");
+                        }
+                        else {
+                            userGuessedVisisbleWord.push("_");
+                        }
+
+                    }
+
+                this.displayValues();
+            },
+
+            youWon: function() {
+                wins++;
+                this.displayValues();
+                //alert("You won");
+                this.resetToBeginning();
             }
-
-        displayValues();
-
-
-        }
-
+        };
+       
+        computerChoices.resetToBeginning();
 
         document.onkeyup = function(event) {
             //get the usersGuess
@@ -58,93 +77,59 @@ window.onload = function () {
             var tempCount = 0;
 
             for(var i = 0; i < wordArray.length; i++)
-            {
-                if(wordArray[i] === userGuess){
-                   userGuessedVisisbleWord[i] = (userGuess);
-                    //tempArray.push(userGuess);
-                    tempCount++;
-
-                
-                }
-                else{
-                    //userGuessedVisisbleWord.push(wordArray[i]);
-                    //tempArray.push(userGuessedVisisbleWord[i]);          
-                   
-                }
-
-            }
-
-                if(tempCount === 0){
-
-                    if(guessedLetters.includes(userGuess)){
-
-                        //do nothing
+                {
+                    if(wordArray[i] === userGuess){
+                        userGuessedVisisbleWord[i] = (userGuess);
+                        //tempArray.push(userGuess);
+                        tempCount++;                
                     }
-                    else {
+                    else{
+                        //userGuessedVisisbleWord.push(wordArray[i]);
+                        //tempArray.push(userGuessedVisisbleWord[i]);                 
+                    }
+
+                }
+
+            if(tempCount === 0){
+
+                if(guessedLetters.includes(userGuess)){
+                    //do nothing
+                }
+                else {
 
                     guessedLetters.push(userGuess);
                     guessesLeft --;
 
-                    }
+                }
 
-                    if(guessesLeft == 0)
-                    {
-                        alert("Sorry looks like you lost this one");
-                        resetToBeginning();
+                if(guessesLeft == 0){
 
-                    }
-                    else{
-                        //do nothing they still get to keep guessing
-                        
-                    }
-                
+                    alert("Sorry looks like you lost this one");
+                    computerChoices.resetToBeginning();
+
                 }
                 else{
-                   //do nothing they guessed right
-                   
+                    //do nothing they still get to keep guessing               
                 }
-                displayValues();
-
-           
-            
-            if(userGuessedVisisbleWord.includes("_")){
-                //keep guessing
-
+                
             }
             else{
-                displayValues();
-                youWon();
+                //do nothing they guessed right                   
             }
 
-
+            computerChoices.displayValues();
+               
+            if(userGuessedVisisbleWord.includes("_")){
+                //keep guessing
+            }
+            else{
+                computerChoices.displayValues();
+                computerChoices.youWon();
+            }
 
         };
 
-        function displayValues(){
-
-            displayedWord = userGuessedVisisbleWord.toString().replace(/,/g," " );
-
-            console.log("Selected word array " + selectedWord + " array for user " + userGuessedVisisbleWord);
-
-
-            document.querySelector("#currentWord").innerHTML = "<h5>" + displayedWord + "</h5>";
-            document.querySelector("#totalWins").innerHTML = "<h5>" + wins + "</h5>";
-            document.querySelector("#remainingGuesses").innerHTML = "<h5>" + guessesLeft + "</h5>";
-            document.querySelector("#guessedLetters").innerHTML = "<h5>" + guessedLetters + "</h5>";
-
-
-        }
-
-        function youWon(){
-            wins++;
-            displayValues();
-            //alert("You won");
-            resetToBeginning();
-
-
-
-        }
-    }
+}
         
     
     
