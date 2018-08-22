@@ -81,13 +81,14 @@ window.onload = function () {
                 audio.play();
                 pictureDisplay.src = 'assets/images/redballoon.png';
                 pictureDisplay2.src = 'assets/images/redballoon.png'; 
-                //setTimeout(computerChoices.wait,3000);
+                setTimeout(function () { pictureDisplay.src = ''; pictureDisplay2.src = ''; },1000);
                 this.resetToBeginning(); 
                 
             },
 
             wait: function(){
             //
+            alert("hi");
                 
             }
 
@@ -102,8 +103,7 @@ window.onload = function () {
             var userGuess = event.key;
             var tempCount = 0;
 
-            for(var i = 0; i < wordArray.length; i++)
-                {
+            for(var i = 0; i < wordArray.length; i++){
                     if(wordArray[i] === userGuess){
                         userGuessedVisisbleWord[i] = (userGuess);
                         //tempArray.push(userGuess);
@@ -128,7 +128,7 @@ window.onload = function () {
 
                 }
 
-                if(guessesLeft == 0){
+                if(guessesLeft === 0){
 
                     alert("Sorry looks like you lost this one");
                     computerChoices.resetToBeginning();
